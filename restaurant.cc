@@ -8,13 +8,17 @@ using namespace std;
  * Compléter le code à partir d'ici
  *****************************************************/
 
+#include <iomanip>
+
 class Produit {
 private:
   string nom;
   string unite;
 
 public:
-  Produit(string nom, string unite = "") : nom(nom), unite(unite) {}
+  Produit(string nom, string unite = "") : nom(nom), unite(unite) {
+    std::cout.precision(6);
+  }
 
   string getNom() const { return nom; }
   string getUnite() const { return unite; }
@@ -50,12 +54,12 @@ public:
   string descriptionAdaptee() {
     stringstream ss;
     auto pa = produit.adapter(quantite);
-    ss << getQuantite() << " " << pa->getUnite() << " de " << pa->toString(); //TODO
+    ss << fixed << getQuantite() << " " << pa->getUnite() << " de " << pa->toString(); //TODO
     return ss.str();
   }
 
   double quantiteTotale(string const &nomProduit) const {
-    double sum = produit.quantiteTotale(nomProduit)*quantite;
+    double sum = produit.quantiteTotale(nomProduit) * quantite;
     return sum;
   }
 };
@@ -85,7 +89,7 @@ public:
 
   string toString() const {
     stringstream ss;
-    ss << "Recette " << nom << " x " << nbFois << ":" << endl;
+    ss << "Recette \"" << nom << "\" x " << nbFois << ":" << endl;
     int count = 1;
     for (auto i : ingredients) {
       ss << count++ << ". ";
@@ -98,7 +102,7 @@ public:
   double quantiteTotale(string const &nomProduit) const {
     double sum = 0.0;
     for (auto i : ingredients) {
-      sum += i.quantiteTotale(nomProduit)*nbFois;
+      sum += i.quantiteTotale(nomProduit);// *nbFois;
     }
     return sum;
   }
@@ -139,6 +143,11 @@ public:
   }
 
 };
+
+
+
+
+
 
 /*******************************************
  * Ne rien modifier après cette ligne.
